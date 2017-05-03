@@ -14,18 +14,29 @@
                             <span class="label">Status:</span> {!! $player->personaState !!}
                         </div>
                     </div>
-                    <div class="panel-body">
-                        <p>
-                            Welcome, {{ $player->personaName }}
-                            <br>
-                            This your dashboard, this is where you can set your LFG status and view your created groups 
-                            or to monitor what groups you've been invited to.
-                            <br>
-                            <a href="#">Looking For Group</a>
-                            <br>
-                            <a href="#">Looking For More</a>
+                    <p>
+                        Welcome, {{ $player->personaName }}
+                        
+                        <br>
+                        This your dashboard, this is where you can set your LFG status and view your created groups 
+                        or to monitor what groups you've been invited to.
+                        <br>
+                        <a href="#">Search for Groups</a>
+                        <br>
+                        <a href="#">Create a Group</a>
 
-                        </p>
+                    </p>
+                    <div class="panel-body">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Games Owned - (Total: {{ count($playerGames) }})</div>
+                            <div class="games-list">
+                            <ul>
+                                @foreach($playerGames as $game)
+                                    <li><img src="{{ $game->icon }}"/> {{ $game->name }}</li>
+                                @endforeach
+                            </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

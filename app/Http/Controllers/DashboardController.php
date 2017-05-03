@@ -28,7 +28,8 @@ class DashboardController extends Controller
         $steamId = Auth::user()->steamid;
         $player = Steam::user($steamId)->GetPlayerSummaries()[0];
         $steamLevel = Steam::player($steamId)->GetSteamLevel();
+        $playerGames =Steam::player($steamId)->GetOwnedGames();
 
-        return view('dashboard', compact('player', 'steamLevel'));
+        return view('dashboard', compact('player', 'steamLevel', 'playerGames'));
     }
 }

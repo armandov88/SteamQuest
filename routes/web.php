@@ -18,3 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index')->name('index');
+
+Route::get('/u/{id}', 'ProfileController@show');
+
+Route::resource('/g', 'LFGController');
