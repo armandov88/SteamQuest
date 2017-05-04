@@ -20,5 +20,6 @@ Auth::routes();
 Route::get('/dashboard', 'DashboardController@index')->name('index');
 
 Route::get('/u/{id}', 'ProfileController@show');
+Route::get('/u', 'ProfileController@index');
 
 Route::resource('/g', 'LFGController');

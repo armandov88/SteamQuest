@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->boolean('isLookingForGroup')->default(1);
+            $table->string('personaName')->nullable();
             $table->string('avatar')->nullable();
             $table->rememberToken();
             $table->timestamps();

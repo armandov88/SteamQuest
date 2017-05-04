@@ -8,6 +8,15 @@ use Steam;
 
 class ProfileController extends Controller
 {
+      
+     private $users;
+     private $userSteamId;
+
+     public function __construct()
+     {
+         $this->users = User::all();
+     }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +24,8 @@ class ProfileController extends Controller
      */
     public function index()
     {
-
+        $listUsers = $this->users;        
+        return view('users.profiles.index', compact('listUsers'));
     }
 
     /**
@@ -39,7 +49,7 @@ class ProfileController extends Controller
         //
     }
 
-    /**
+    /** 
      * Display the specified resource.
      *
      * @param  int  $id
@@ -48,9 +58,13 @@ class ProfileController extends Controller
     public function show($id)
     {
         //
-        $user = User::find(1);
+        $user = $this->users->find(1);
         $steamid = $user->steamid;
-        return view('users.profiles.show', compact('user'));
+        $steamProfile = Steam::user($steamid)->getPlayerSummaries()[0];
+        $level = Steam::player($steamid)->getSteamLevel();
+
+        $playerGames =Steam::player($steamid)->GetOwnedGames();
+        return view('users.profiles.show', compact('user', 'steamProfile','level', 'playerGames'));
 
     }
 

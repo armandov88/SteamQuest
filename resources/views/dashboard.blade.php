@@ -8,7 +8,7 @@
                 <div class="panel-heading">Dashboard</div>
                 <div class="player-dashboard">
                     <div class="playerStats">
-                        {!! $player->avatarFull !!}
+                        {{ $player->avatar }}
                         <div class="vitals">
                             <span class="label">Steam Level:</span>{{ $steamLevel }}
                             <span class="label">Status:</span> {!! $player->personaState !!}
