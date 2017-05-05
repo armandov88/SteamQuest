@@ -3,9 +3,9 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Steam;
+use App\Groups;
 
 class User extends Authenticatable
 {
@@ -29,9 +29,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function getSteamData($id)
+    public function groups()
     {
-        
+        return $this->hasMany(Groups::class);
     }
-
 }

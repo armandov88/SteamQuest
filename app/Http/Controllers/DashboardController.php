@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Steam;
+use App\Groups;
 use App\User;
 use Cookie;
 use DB;
@@ -33,21 +34,23 @@ class DashboardController extends Controller
     {
         $player = $this->user;
         $steamId = $player->steamid;
-        
+        $steamInfo = Steam::user($steamId)->getPlayerSummaries()[0];
         $steamLevel = Steam::player($steamId)->GetSteamLevel();
-        $playerGames =Steam::player($steamId)->GetOwnedGames();
+        $groups = Groups::where('creator_id', $player->id)->get();
         
-        if(!Cookie::has('personaName') && !Cookie::has('avatar')){
+        if(Cookie::has('personaName') && Cookie::has('avatar')){
             echo "<script>console.log('injected') </script>";
             if( Auth::user()->personaName != Cookie::get('personaName')){
+                echo "<script>console.log('name injected') </script>";
                 DB::table('users')->update(['personaName' => Cookie::get('personaName') ]);
             }
 
             if( Auth::user()->avatar != Cookie::get('avatar')){
+                echo "<script>console.log('avatar injected') </script>";
                 DB::table('users')->update(['avatar' => Cookie::get('avatar')]);
             }
         }
 
-        return view('dashboard', compact('player','steamLevel', 'playerGames'));
+        return view('dashboard', compact('player','steamLevel', 'groups', 'steamInfo'));
     }
 }

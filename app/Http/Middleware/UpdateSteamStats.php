@@ -25,7 +25,7 @@ class UpdateSteamStats
         if (Cookie::has('personaName') && Cookie::has('avatar')){
             return $next($request);
         }
-
+        echo "<script> console.log('ran')</script>";
         $personaName = Steam::user($this->user->steamid)->getPlayerSummaries()[0]->personaName;
         $avatar = Steam::user($this->user->steamid)->getPlayerSummaries()[0]->avatarUrl;
         Cookie::queue('personaName', $personaName, 1 );
