@@ -68,6 +68,8 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'steamid' => $data['steamid'],
+            'avatar' => Steam::user($data['steamid'])->getPlayerSummaries()[0]->avatarUrl,
+            'personaName' => Steam::user($data['steamid'])->getPlayerSummaries()[0]->personaName,
             'password' => bcrypt($data['password']),
         ]);
     }

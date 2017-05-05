@@ -9,8 +9,24 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 .col-center { float:none; margin:0 auto; }
-span.label { color:Black; font-weight:bold; }
+span.label { color:$brand-info; font-weight:bold; }
 span.text-error { color:red; font-weight:bold; }
 span.online { color:green; font-weight:bold; }
 
 .player-dashboard { padding:1em; }
+
+.btn-primary, .btn a { color:#FFFFFF !important;  }
+
+.panel-default > .panel-heading { color:#FFFFFF; padding:1em; }
+
+.games-list ul > li { list-style:none;  padding:1em; }
+
+.profile-heading { width:100%; background-color:#343956; padding:1em; }
+
+.panel-default { background-color:#202627; color:#FFFFFF; }
+
+.games-list-toggle { float:right; border-radius:100%; }
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #344151;
+}

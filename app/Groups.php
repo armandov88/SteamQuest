@@ -11,7 +11,7 @@ class Groups extends Model
     use Notifiable;
     //
     protected $fillable = [
-        'creator_id', 'group_name', 'app_name', 'description',
+        'creator_id','creator_name', 'group_name', 'app_name', 'description',
     ];
 
     public function user()

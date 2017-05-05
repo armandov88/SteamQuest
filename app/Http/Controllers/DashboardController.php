@@ -21,8 +21,7 @@ class DashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('SteamUpdate');
-        $this->user = User::find(1);
+        //$this->middleware('SteamUpdate');
     }
 
     /**
@@ -32,13 +31,13 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $player = $this->user;
+        $player = User::find(Auth::id());
         $steamId = $player->steamid;
         $steamInfo = Steam::user($steamId)->getPlayerSummaries()[0];
         $steamLevel = Steam::player($steamId)->GetSteamLevel();
         $groups = Groups::where('creator_id', $player->id)->get();
         
-        if(Cookie::has('personaName') && Cookie::has('avatar')){
+        /*if(Cookie::has('personaName') && Cookie::has('avatar')){
             echo "<script>console.log('injected') </script>";
             if( Auth::user()->personaName != Cookie::get('personaName')){
                 echo "<script>console.log('name injected') </script>";
@@ -49,7 +48,7 @@ class DashboardController extends Controller
                 echo "<script>console.log('avatar injected') </script>";
                 DB::table('users')->update(['avatar' => Cookie::get('avatar')]);
             }
-        }
+        }*/
 
         return view('dashboard', compact('player','steamLevel', 'groups', 'steamInfo'));
     }

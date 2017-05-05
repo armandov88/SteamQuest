@@ -14,8 +14,7 @@ class GroupsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->user = User::find(1);
+        $this->middleware('auth', ['except' => array('index', 'show')]);
     }
     /**
      * Display a listing of the resource.
@@ -24,8 +23,8 @@ class GroupsController extends Controller
      */
     public function index()
     {
-        
         $groups = Groups::all();
+         
         return view('groups.index', compact('groups'));
     }
 
@@ -36,13 +35,14 @@ class GroupsController extends Controller
      */
     public function create()
     {
-        $steamid = $this->user->steamid;  
+        $user = User::find(Auth::id());
+        $steamid = $user->steamid;  
         $games =Steam::player($steamid)->GetOwnedGames();
         $gameList = [];
 
         foreach($games as $game)
         {
-            $gameList[$game->appId] = $game->name;
+            $gameList[$game->name] = $game->name;
         }
         return view('groups.create', compact('gameList'));
     }
@@ -55,8 +55,10 @@ class GroupsController extends Controller
      */
     public function store(Request $request)
     {
+        $user = User::find(Auth::id());
         $group = Groups::create([
-            'creator_id' => $this->user->id,
+            'creator_id' => $user->id,
+            'creator_name' => $user->personaName,
             'group_name' => $request->input('group_name'),
             'app_name' =>  $request->input('app_name'),
             'description' => $request->input('description'),
@@ -73,7 +75,7 @@ class GroupsController extends Controller
      */
     public function show($id)
     {
-        $group = Groups::find(1);
+        $group = Groups::find($id);
         return view('groups.profile', compact('group'));
     }
 
@@ -86,14 +88,14 @@ class GroupsController extends Controller
     public function edit($id)
     {
         //
-        $group = Groups::findOrFail($id);
+        $group = Groups::find($id);
         $steamid = $this->user->steamid;  
         $games =Steam::player($steamid)->GetOwnedGames();
         $gameList = [];
 
         foreach($games as $game)
         {
-            $gameList[$game->appId] = $game->name;
+            $gameList[$game->name] = $game->name;
         }
         return view('groups.edit', compact('group', 'gameList'));
     }
@@ -107,7 +109,7 @@ class GroupsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $group = Groups::find(1);
+        $group = Groups::find($id);
         $group->update([
             'creator_id' => $this->user->id,
             'group_name' =>  $request->input('group_name'),
@@ -126,7 +128,7 @@ class GroupsController extends Controller
      */
     public function destroy($id)
     {
-        $group = Groups::find(1);
+        $group = Groups::find($id);
         $group->delete();
 
         return redirect('dashboard');

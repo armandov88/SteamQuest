@@ -35,6 +35,8 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Group Name</th>
+                                        <th> Edit Group </th>
+                                        <th> Delete Group </th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -45,10 +47,10 @@
                                             <td> <a href="/g/{{$group->id}}">{{ $group->group_name }}</a></td>
                                             <td><div class="btn btn-success"><a href="{{ route('g.edit', $group->id) }}"> Edit</a></div></td>
                                             <td>
-                                                {!! Form::open(['route'=>['g.destroy']]) !!}
+                                                {!! Form::model($group, ['method' => 'PATCH', 'action' => ['GroupsController@destroy',$group->id]]) !!}
                                                     <input type="hidden" name="_method" value="DELETE">
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <button>Delete User</button>
+                                                    <button class="btn btn-danger">Delete User</button>
                                                 {!! Form::close() !!}
                                             </td>
                                         </tr>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Steam; 
+use App\Groups;
 
 class ProfileController extends Controller
 {
@@ -28,27 +29,6 @@ class ProfileController extends Controller
         return view('users.profiles.index', compact('listUsers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
     /** 
      * Display the specified resource.
      *
@@ -58,47 +38,14 @@ class ProfileController extends Controller
     public function show($id)
     {
         //
-        $user = $this->users->find(1);
+        $user = $this->users->find($id);
         $steamid = $user->steamid;
         $steamProfile = Steam::user($steamid)->getPlayerSummaries()[0];
         $level = Steam::player($steamid)->getSteamLevel();
+        $groups = Groups::where('creator_id', $user->id)->get();
 
         $playerGames =Steam::player($steamid)->GetOwnedGames();
-        return view('users.profiles.show', compact('user', 'steamProfile','level', 'playerGames'));
+        return view('users.profiles.show', compact('user', 'steamProfile','level', 'playerGames', 'groups'));
 
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
